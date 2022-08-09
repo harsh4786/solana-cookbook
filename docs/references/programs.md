@@ -1,5 +1,5 @@
 ---
-title: Programs
+title: Writing Programs
 head:
   - - meta
     - name: title
@@ -9,10 +9,10 @@ head:
       content: Solana Cookbook | Solana Program References
   - - meta
     - name: description
-      content: Learn about Programs, Cross Program Invocation, Program Derived Address, more code Samples and references at The Solana cookbook.
+      content: Learn how to write programs on Solana, with references on cross program invocation, reading accounts, and more
   - - meta
     - name: og:description
-      content: Learn about Programs, Cross Program Invocation, Program Derived Address, more code Samples and references at The Solana cookbook.
+      content: Learn how to write programs on Solana, with references on cross program invocation, reading accounts, and more
   - - meta
     - name: og:image
       content: https://solanacookbook.com/cookbook-sharing-card.png
@@ -34,12 +34,11 @@ head:
   - - meta
     - name: googlebot
       content: index,follow
-footer: MIT Licensed
 ---
 
-# Programs
+# Writing Programs
 
-## Transferring Lamports
+## How to transfer SOL in a program
 
 Your Solana Program can transfer lamports from one account to another
 without 'invoking' the System program. The fundamental rule is that
@@ -47,15 +46,6 @@ your program can transfer lamports from any account **owned** by your program
 to any account at all.
 
 The recipient account *does not have to be* an account owned by your program.
-
-### Scenario
-You program performs certain instructions (the `instruction_handler` function below)
-that charges  a 'tax', or service fee (the `transfer_service_fee_lamports` function),
-for performing the operation. The cost of this fee is 5 lamports.
-
-The protocol in the instruction is that the 'from' account is the
-first entry in the `&[AccountInfo]` array and the account you've setup to
-receive the fees is the second entry in the array:
 
 <CodeGroup>
   <CodeGroupItem title="Program">
@@ -158,11 +148,45 @@ The client side instruction, now only needs to pass the state and payer accounts
   </SolanaCodeGroupItem>
 </SolanaCodeGroup>
 
+## How to change account size
+
+You can change a program owned account's size with the use 
+of `realloc`. `realloc` can resize an account up to 10KB.
+When you use `realloc` to increase the size of an account,
+you must transfer lamports in order to keep that account
+rent-exempt.
+
+<SolanaCodeGroup>
+  <SolanaCodeGroupItem title="Rust" active>
+
+  <template v-slot:default>
+
+@[code](@/code/programs/realloc/realloc.en.rs)
+
+  </template>
+
+  <template v-slot:preview>
+
+@[code](@/code/programs/realloc/realloc.preview.en.rs)
+
+  </template>
+
+  </SolanaCodeGroupItem>
+</SolanaCodeGroup>
+
 ## How to do Cross Program Invocation
 
-A cross program invocation, is simply put calling another program's instruction inside our program. One best example to put forth is Uniswap's `swap` functionality. The `UniswapV2Router` contract, calls the necessary logic to swap, and calls the `ERC20` contract's transfer function to swap from one person to another. The same way, we can call a program's instruction to have multitude of purposes.
+A cross program invocation, is simply put calling another 
+program's instruction inside our program. One best example 
+to put forth is Uniswap's `swap` functionality. The 
+`UniswapV2Router` contract, calls the necessary logic to 
+swap, and calls the `ERC20` contract's transfer function 
+to swap from one person to another. The same way, we can 
+call a program's instruction to have multitude of purposes.
 
-Lets have a look at our first example which is the `SPL Token Program's transfer` instruction. The required accounts we would need for a transfer to happen are
+Lets have a look at our first example which is the 
+`SPL Token Program's transfer` instruction. The required 
+accounts we would need for a transfer to happen are
 
 1. The Source Token Account (The account which we are holding our tokens)
 2. The Destination Token Account (The account which we would be transferring our tokens to)
@@ -251,9 +275,9 @@ The respective client side code will look as follows
   </SolanaCodeGroupItem>
 </SolanaCodeGroup>
 
-## Create a Program Derived Address
+## How to create a PDA
 
-A Program Derived Addres is simply an account owned by the program, but has no private key. Instead it's signature is obtained by a set of seeds and a bump (a nonce which makes sure it's off curve). "**Generating**" a Program Address is different from "**creating**" it. One can generate a PDA using `Pubkey::find_program_address`. Creating a PDA essentially means to initialize the address with space and set the state to it. A normal Keypair account can be created outside of our program and then fed to initialize it's state. Unfortunately, for PDAs, it has be created on chain, due to the nature of not being able to sign on behalf of itself. Hence we use `invoke_signed` to pass the seeds of the PDA, along with the funding account's signature which results in account creation of a PDA.
+A Program Derived Address is simply an account owned by the program, but has no private key. Instead it's signature is obtained by a set of seeds and a bump (a nonce which makes sure it's off curve). "**Generating**" a Program Address is different from "**creating**" it. One can generate a PDA using `Pubkey::find_program_address`. Creating a PDA essentially means to initialize the address with space and set the state to it. A normal Keypair account can be created outside of our program and then fed to initialize it's state. Unfortunately, for PDAs, it has be created on chain, due to the nature of not being able to sign on behalf of itself. Hence we use `invoke_signed` to pass the seeds of the PDA, along with the funding account's signature which results in account creation of a PDA.
 
 <SolanaCodeGroup>
   <SolanaCodeGroupItem title="Rust" active>
@@ -293,7 +317,7 @@ One can send the required accounts via client as follows
   </SolanaCodeGroupItem>
 </SolanaCodeGroup>
 
-## Read account
+## How to read accounts
 
 Almost all instructions in Solana would require atleast 2 - 3 accounts, and they would be mentioned over the instruction handlers on what order it's expecting those set of accounts. It's fairly simple if we take advantage of the `iter()` method in Rust, instead of manually indicing the accounts. The `next_account_info` method basically slices the first index of the iterable and returning the account present inside the accounts array. Let's see a simple instruction which expects a bunch of accounts and requiring to parse each of them.
 
@@ -315,7 +339,7 @@ Almost all instructions in Solana would require atleast 2 - 3 accounts, and they
   </SolanaCodeGroupItem>
 </SolanaCodeGroup>
 
-## Verify Account
+## How to verify accounts
 
 Since programs in Solana are stateless, we as a program creator have to make sure the accounts passed are validated as much as possible to avoid any malicious account entry. The basic checks one can do are
 
@@ -339,6 +363,29 @@ A basic instruction which initializes a hero state account, but with the above m
   <template v-slot:preview>
 
 @[code](@/code/programs/verify-account/program/src/lib.preview.rs)
+
+  </template>
+
+  </SolanaCodeGroupItem>
+</SolanaCodeGroup>
+
+## How to read multiple instructions from a transaction
+
+Solana allows us to take a peek at all of the instructions in the current transaction. We can store them in a variable and 
+iterate over them. We can do many things with this, like checking for suspicious transactions. 
+
+<SolanaCodeGroup>
+  <SolanaCodeGroupItem title="Rust" active>
+
+  <template v-slot:default>
+
+@[code](@/code/programs/read-multiple-instructions/program/lib.rs)
+
+  </template>
+
+  <template v-slot:preview>
+  
+@[code](@/code/programs/read-multiple-instructions/program/lib.preview.rs)
 
   </template>
 

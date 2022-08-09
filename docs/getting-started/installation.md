@@ -9,10 +9,10 @@ head:
       content: Solana Cookbook | Installation
   - - meta
     - name: description
-      content: Install Javascript or Typescript and Rust SDKs for Development on Solana. Learn about Installation and Getting Started on solana at The Solana cookbook.
+      content: Learn how to get started on Solana with tutorials, guides, and examples.
   - - meta
     - name: og:description
-      content: Install Javascript or Typescript and Rust SDKs for Development on Solana. Learn more about Installation and Getting Started on solana at The Solana cookbook.
+      content: Learn how to get started on Solana with tutorials, guides, and examples.
   - - meta
     - name: og:image
       content: https://solanacookbook.com/cookbook-sharing-card.png
@@ -82,7 +82,7 @@ npm install --save @solana/web3.js
 ### SPL-Token
 
 `@solana/spl-token` is a library that contains many of the javascript/typescript bindings needed to interact with SPL tokens.
-    You can use this library to mint new SPL tokens, transfer tokens, and more.
+You can use this library to mint new SPL tokens, transfer tokens, and more.
 
 You can install this library with the following:
 
@@ -121,8 +121,8 @@ npm install --save @solana/spl-token
 ### Wallet-Adapter
 
 There is a collection of libraries that can help bootstrap wallet connections within Solana called wallet-adapter.
-    Currently the package supports use within Angular, Vue.js, and React. Wallet-adapter can quickstart your dApp
-    integration with wallets like [Phantom](https://phantom.app/), [Solflare](https://solflare.com/), and more.
+Currently the package supports use within Svelte, Angular, Vue.js, and React. Wallet-adapter can quickstart your dApp
+integration with wallets like [Phantom](https://phantom.app/), [Solflare](https://solflare.com/), and more.
 
 You can install this library with the following:
 
@@ -181,7 +181,7 @@ sh -c "$(curl -sSfL https://release.solana.com/LATEST_RELEASE/install)"
 
 You can replace `LATEST_RELEASE` with the release tag matching
 the software version of your desired release, or use one of the three symbolic
-channel names: `stable`, `beta`, or `edge`. To find the latest release, check 
+channel names: `stable`, `beta`, or `edge`. To find the latest release, check
 versions available [here](https://github.com/solana-labs/solana/releases).
 
 The following output indicates a successful update:
@@ -216,7 +216,7 @@ update the Solana software to a newer version at any time.
 
 #### Downloading Binaries (Linux)
 
-Alternatively, you can build from binaries instead of using solana-install.
+Alternatively, you can install from binaries instead of using solana-install.
 
 Download the binaries by navigating to
 [https://github.com/solana-labs/solana/releases/latest](https://github.com/solana-labs/solana/releases/latest),
@@ -231,7 +231,7 @@ export PATH=$PWD/bin:$PATH
 
 #### Downloading Binaries (macOS)
 
-Alternatively, you can build from binaries instead of using solana-install.
+Alternatively, you can install from binaries instead of using solana-install.
 
 Download the binaries by navigating to
 [https://github.com/solana-labs/solana/releases/latest](https://github.com/solana-labs/solana/releases/latest),
@@ -259,17 +259,17 @@ Copy and paste the following command, then press Enter to download the Solana
 installer into a temporary directory:
 
 ```bash
-curl https://release.solana.com/v1.8.5/solana-install-init-x86_64-pc-windows-msvc.exe --output C:\solana-install-tmp\solana-install-init.exe --create-dirs
+curl https://release.solana.com/v1.9.16/solana-install-init-x86_64-pc-windows-msvc.exe --output C:\solana-install-tmp\solana-install-init.exe --create-dirs
 ```
 
-If `v1.8.5` is not your desired version, find the latest release [here](https://github.com/solana-labs/solana/releases).
+If `v1.9.16` is not your desired version, find the latest release [here](https://github.com/solana-labs/solana/releases).
 
 Copy and paste the following command, then press Enter to install the latest
 version of Solana. If you see a security pop-up by your system, please select
 to allow the program to run.
 
 ```bash
-C:\solana-install-tmp\solana-install-init.exe v1.8.5
+C:\solana-install-tmp\solana-install-init.exe v1.9.16
 ```
 
 To find the latest release, check
@@ -294,7 +294,7 @@ update the Solana software to a newer version at any time.
 
 #### Downloading Binaries
 
-Alternatively, you can build from binaries instead of using solana-install.
+Alternatively, you can install from binaries instead of using solana-install.
 
 Download the binaries by navigating to
 [https://github.com/solana-labs/solana/releases/latest](https://github.com/solana-labs/solana/releases/latest),

@@ -10,7 +10,8 @@ The Cookbook is welcome to any and all contributions. Please refer to
 the project's style when contributing new snippets of code.
 
 ### Structure
-Currently we have "topics" under `/docs` and the code for those topics 
+
+Currently we have "topics" under `/docs` and the code for those topics
 lives under `/code/<topic>`.
 
 ### References
@@ -61,12 +62,13 @@ It will take some time to start, the documentation can then be viewed
 at (http://localhost:8080/)
 
 ### Committing
+
 We are using [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)
 for this repository.
 
 To choose a task or make your own, do the following:
 
-1. [Add an issue](https://github.com/solana-dev-adv/solana-cookbook/issues/new) for the task and assign it to yourself or comment on the issue
+1. [Add an issue](https://github.com/solana-developers/solana-cookbook/issues/new) for the task and assign it to yourself or comment on the issue
 2. Make a draft PR referencing the issue.
 
 The general flow for making a contribution:
@@ -77,13 +79,14 @@ The general flow for making a contribution:
 4. Push your work back up to your fork
 5. Submit a Pull request so that we can review your changes
 
-**NOTE**: Be sure to merge the latest from "upstream" before making a 
+**NOTE**: Be sure to merge the latest from "upstream" before making a
 pull request!
 
-You can find tasks on the [project board](https://github.com/solana-dev-adv/solana-cookbook/projects/1) 
+You can find tasks on the [project board](https://github.com/solana-developers/solana-cookbook/projects/1)
 or create an issue and assign it to yourself.
 
 ### Contribution Rewards
+
 The first 25 successful contributors to the Solana Cookbook will get an exclusive Glasseater NFT from the [Superteam DAO](https://superteam.fun). Use this NFT to get direct access to exclusive Solana Ecosystem jobs. If you have already contributed, [claim your Glasseater NFT now](https://alpha.layer3.xyz/task/contribute-to-the-solana-cookbook)!
 
 ### [NOTE: Documentation changes/edits will not be considered for Contribution Rewards]

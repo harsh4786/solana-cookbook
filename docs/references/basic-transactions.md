@@ -1,12 +1,12 @@
 ---
-title: Basic Transactions
+title: Sending Transactions
 head:
   - - meta
     - name: title
-      content: Solana Cookbook | Basic Transactions
+      content: Solana Cookbook | Sending Transactions
   - - meta
     - name: og:title
-      content: Solana Cookbook | Basic Transactions
+      content: Solana Cookbook | Sending Transactions
   - - meta
     - name: description
       content: Learn Basic Transactions like Sending SOL, SPL-Tokens, Calculating Transaction Cost, and more references for Building on Solana at The Solana cookbook.
@@ -34,12 +34,11 @@ head:
   - - meta
     - name: googlebot
       content: index,follow
-footer: MIT Licensed
 ---
 
-# Basic Transactions
+# Sending Transactions
 
-## Sending SOL
+## How to send SOL
 
 To send SOL, you will need to interact with the [SystemProgram][1].
 
@@ -116,7 +115,7 @@ To send SOL, you will need to interact with the [SystemProgram][1].
 
 [1]: https://docs.solana.com/developing/runtime-facilities/programs#system-program
 
-## Sending SPL Tokens
+## How to send SPL-Tokens
 
 Use the [Token Program][1] to transfer SPL Tokens. In order to send a SPL token, you need to know its SPL token account address. You can both get the address and send tokens
 with the following example.
@@ -168,32 +167,56 @@ with the following example.
 
 [1]: https://spl.solana.com/token
 
-## Calculating Transaction Cost
+## How to calculate transaction cost
 
 The number of signatures a transaction requires are used to calculate
-the transaction cost. As long as you are not create an account, this
+the transaction cost. As long as you are not creating an account, this
 will be the final transaction cost. To find out more about costs to create
-and account, check out [calculating rent exemption](accounts.md#calculating-rent-exemption)
+an account, check out [calculating rent exemption](accounts.md#calculating-rent-exemption)
 
+The two examples below show the two ways currently available to calculate estimated transaction cost.
+
+The first example uses `getEstimatedFee`, which is a new method on the `Transaction` class, while the second example uses `getFeeForMessage` which replaces `getFeeCalculatorForBlockhash` on the `Connection` class.
+
+### getEstimatedFee
 <SolanaCodeGroup>
-  <SolanaCodeGroupItem title="TS" active>
+    <SolanaCodeGroupItem title="TS" active>
 
   <template v-slot:default>
 
-@[code](@/code/basic-transactions/calc-tx-cost/calc-tx-cost.en.ts)
+@[code](@/code/basic-transactions/calc-tx-cost/calc-tx-est-fees.en.ts)
 
   </template>
 
   <template v-slot:preview>
 
-@[code](@/code/basic-transactions/calc-tx-cost/calc-tx-cost.preview.en.ts)
+@[code](@/code/basic-transactions/calc-tx-cost/calc-tx-est-fees.preview.en.ts)
 
   </template>
 
   </SolanaCodeGroupItem>
 </SolanaCodeGroup>
 
-## Adding a Memo
+### getFeeForMessage
+<SolanaCodeGroup>
+    <SolanaCodeGroupItem title="TS" active>
+
+  <template v-slot:default>
+
+@[code](@/code/basic-transactions/calc-tx-cost/calc-tx-est-fees-for-message.en.ts)
+
+  </template>
+
+  <template v-slot:preview>
+
+@[code](@/code/basic-transactions/calc-tx-cost/calc-tx-est-fees-for-message.preview.en.ts)
+
+  </template>
+
+  </SolanaCodeGroupItem>
+</SolanaCodeGroup>
+
+## How to add a memo to a transaction
 
 Any transaction can add a message making use of the [memo program][2].
 Currently the `programID` from the **Memo Program** has to be added
@@ -244,29 +267,52 @@ manually `MemoSq4gqABAXKb96qnH8TysNcWxMyWCqXgDLGmfcHr`.
 
 </SolanaCodeGroup>
 
-## Setting Transaction Wide Compute Units
+## How to change compute budget for a transaction
 
-Prior to 1.9.2 each instruction in a transaction received a 200_000 Compute Unit Budget.
+Compute budget for a single transaction can be changed by adding an instruction
+call to the Compute Budget Program. By default the compute budget is set the product 
+of 200k compute units * number of instructions, with a max of 1.4M compute units. 
+The less compute you use, the less the transaction costs.
 
-Starting with 1.9.2 the model changed where, by default, a transaction wide Compute Unit budget is 200_000.
-And this means that each instruction will now **_draws down_** from the transaction budget which may starve latter instructions and
-fail the whole transaction.
+**Note**: To change the compute budget for a transaction, you must make the 
+one of the first three instructions of the transaction the instruction that 
+sets the budget.
 
-To increase the Compute Unit budget for the transaction, create an instruction that sets the Compute Budget for the transaction as the first instruction. Not lines 3 and 8 in the Log Output tab:
+<SolanaCodeGroup>
+  <SolanaCodeGroupItem title="TS" active>
+
+  <template v-slot:default>
+
+@[code](@/code/basic-transactions/compute-budget/computeBudget.en.tsx)
+
+  </template>
+
+  <template v-slot:preview>
+
+@[code](@/code/basic-transactions/compute-budget/computeBudget.preview.en.tsx))
+
+  </template>
+
+  </SolanaCodeGroupItem>
+  <SolanaCodeGroupItem title="Rust">
+  <template v-slot:default>
+
+@[code](@/code/basic-transactions/compute-budget/computeBudget.en.rs))
+
+  </template>
+
+  <template v-slot:preview>
+
+@[code](@/code/basic-transactions/compute-budget/computeBudget.preview.en.rs))
+
+  </template>
+  </SolanaCodeGroupItem>
+
+</SolanaCodeGroup>
+
+Program Logs Example:
 
 <CodeGroup>
-  <CodeGroupItem title="Solana Program">
-
-  @[code](@/code/basic-transactions/compute-budget/solana_program.rs)
-
-  </CodeGroupItem>
-
-  <CodeGroupItem title="Rust Client">
-
-  @[code](@/code/basic-transactions/compute-budget/rust_client.rs)
-
-  </CodeGroupItem>
-
   <CodeGroupItem title="Log Output">
 
   @[code](@/code/basic-transactions/compute-budget/log_output.txt)
